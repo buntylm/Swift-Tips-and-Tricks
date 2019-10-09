@@ -1,7 +1,5 @@
 # Swift-Tips-and-Tricks
 
-### High level functions
-
 ```swift
 /*
  1. Sorted, to sort and return the array
