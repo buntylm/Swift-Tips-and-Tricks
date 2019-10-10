@@ -131,4 +131,24 @@ class StringHolder : DataHolder {
 
 var strings = StringHolder()
 strings.addItem("One")
-print(strings.items)```
+print(strings.items)
+
+
+/*
+ struct define a custom init without loosing the complier generated one
+ */
+struct Person {
+    let name: String
+}
+
+extension Person    {
+    init() {
+        name = "Default name"
+    }
+}
+
+let p1 = Person(name: "Name")
+let p2 = Person()
+
+print(p1)
+print(p2)```
