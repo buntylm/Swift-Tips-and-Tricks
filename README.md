@@ -133,7 +133,6 @@ var strings = StringHolder()
 strings.addItem("One")
 print(strings.items)
 
-
 /*
  struct define a custom init without loosing the complier generated one
  */
