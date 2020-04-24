@@ -1,4 +1,4 @@
-# Swift-Tips-and-Tricks
+# 👨🏽‍💻 Swift Tips and Tricks Swift 🙌🏻
 
 #### Sorted, to sort and return the array
 ```swift
