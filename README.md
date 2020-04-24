@@ -1,4 +1,4 @@
-# 👨🏽‍💻 Swift Tips and Tricks Swift 🙌🏻
+![](https://github.com/buntylm/Swift-Tips-and-Tricks/blob/master/header.png)
 
 #### Sorted, to sort and return the array
 ```swift
