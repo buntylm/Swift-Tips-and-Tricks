@@ -1,4 +1,6 @@
-![](https://github.com/buntylm/Swift-Tips-and-Tricks/blob/master/header.png)
+<p align="center">
+  <img width="460" src="https://github.com/buntylm/Swift-Tips-and-Tricks/blob/master/header.png">
+</p>
 
 #### Sorted, to sort and return the array
 ```swift
