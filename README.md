@@ -140,3 +140,29 @@ let p2 = Person()
 print(p1)
 print(p2)
 ```
+
+#### Throttling (process responsible for regulating the rate at which application processing is conducted)
+[For more, read the full blog here at bmnotes.com](https://bmnotes.com/2020/04/23/how-to-perform-throttling-in-swift-debounce/)
+```swift
+protocol Throttable {
+    func perform(with delay: TimeInterval,
+                 in queue: DispatchQueue,
+                 block completion: @escaping () -> Void) -> () -> Void
+}
+
+extension Throttable {
+    func perform(with delay: TimeInterval,
+                 in queue: DispatchQueue = DispatchQueue.main,
+                 block completion: @escaping () -> Void) -> () -> Void {
+        
+        var workItem: DispatchWorkItem?
+        
+        return {
+            workItem?.cancel()
+            workItem = DispatchWorkItem(block: completion)
+            queue.asyncAfter(deadline: .now() + delay, execute: workItem!)
+        }
+    }
+}
+```
+
