@@ -144,7 +144,7 @@ print(p2)
 ```
 
 #### Throttling (process responsible for regulating the rate at which application processing is conducted)
-[For more, read the full blog here at bmnotes.com](https://bmnotes.com/2020/04/23/how-to-perform-throttling-in-swift-debounce/)
+🔗 [For more, read the full blog here at bmnotes.com](https://bmnotes.com/2020/04/23/how-to-perform-throttling-in-swift-debounce/)
 ```swift
 protocol Throttable {
     func perform(with delay: TimeInterval,
