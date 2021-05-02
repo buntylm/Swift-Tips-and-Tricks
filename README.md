@@ -168,3 +168,58 @@ extension Throttable {
 }
 ```
 
+#### How to test a static func
+```
+import Foundation
+
+// PrivacyManager a class with a static func
+class PrivacyManager {
+    static func requestLocation(completionHandler completion: @escaping (Bool) -> Void) {
+        /*
+         Some implementatino here, and return the result in completion
+         */
+        completion(false)
+    }
+}
+/*
+ How to test PrivacyManager?
+ */
+
+protocol PrivacyManagerBridge {
+    static func requestLocation(completionHandler completion: @escaping (Bool) -> Void)
+}
+
+extension PrivacyManager: PrivacyManagerBridge {}
+
+protocol PrivacyManagable {
+    func requestLocation(onCompletion: @escaping (Bool) -> Void)
+}
+
+class MyAppPrivacyManager: PrivacyManagable {
+    private var trackable: PrivacyManagerBridge.Type!
+    
+    init(trackable: PrivacyManagerBridge.Type = PrivacyManager.self) {
+        self.trackable = trackable
+    }
+
+    func requestLocation(onCompletion: @escaping (Bool) -> Void) {
+        self.trackable.requestLocation(completionHandler: onCompletion)
+    }
+}
+
+/*
+ Let's Test the implementation now
+ */
+
+class MyAppPrivacyManagerMock: PrivacyManagerBridge {
+    static func requestLocation(completionHandler completion: @escaping (Bool) -> Void) {
+        //mock the response here
+        completion(false)
+    }
+}
+
+let myAppPrivacyManager = MyAppPrivacyManager(trackable: MyAppPrivacyManagerMock.self)
+myAppPrivacyManager.requestLocation { status in
+    print(status)
+}
+```
