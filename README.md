@@ -169,7 +169,7 @@ extension Throttable {
 ```
 
 #### How to test a static func
-```
+```swift
 import Foundation
 
 // PrivacyManager a class with a static func
