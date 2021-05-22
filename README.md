@@ -171,55 +171,42 @@ extension Throttable {
 #### How to test a static func
 ```swift
 import Foundation
-
-// PrivacyManager a class with a static func
-class PrivacyManager {
-    static func requestLocation(completionHandler completion: @escaping (Bool) -> Void) {
-        /*
-         Some implementatino here, and return the result in completion
-         */
-        completion(false)
-    }
-}
-/*
- How to test PrivacyManager?
- */
+import AppTrackingTransparency
+import PlaygroundSupport
 
 protocol PrivacyManagerBridge {
-    static func requestLocation(completionHandler completion: @escaping (Bool) -> Void)
+    static func requestTrackingAuthorization(completionHandler completion: @escaping (ATTrackingManager.AuthorizationStatus) -> Void)
 }
 
-extension PrivacyManager: PrivacyManagerBridge {}
+extension ATTrackingManager: PrivacyManagerBridge {}
 
-protocol PrivacyManagable {
-    func requestLocation(onCompletion: @escaping (Bool) -> Void)
+protocol AppPrivacyManagerContract {
+    func requestTrackingAuthorization(completionHandler completion: @escaping (ATTrackingManager.AuthorizationStatus) -> Void)
 }
 
-class MyAppPrivacyManager: PrivacyManagable {
+class AppPrivacyManager: AppPrivacyManagerContract {
     private var trackable: PrivacyManagerBridge.Type!
-    
-    init(trackable: PrivacyManagerBridge.Type = PrivacyManager.self) {
+
+    init(trackable: PrivacyManagerBridge.Type = ATTrackingManager.self) {
         self.trackable = trackable
     }
 
-    func requestLocation(onCompletion: @escaping (Bool) -> Void) {
-        self.trackable.requestLocation(completionHandler: onCompletion)
+    func requestTrackingAuthorization(completionHandler completion: @escaping (ATTrackingManager.AuthorizationStatus) -> Void) {
+        self.trackable.requestTrackingAuthorization(completionHandler: completion)
     }
 }
 
-/*
- Let's Test the implementation now
- */
-
-class MyAppPrivacyManagerMock: PrivacyManagerBridge {
-    static func requestLocation(completionHandler completion: @escaping (Bool) -> Void) {
-        //mock the response here
-        completion(false)
+class ATTrackingManagerMock: PrivacyManagerBridge {
+    static func requestTrackingAuthorization(completionHandler completion: @escaping (ATTrackingManager.AuthorizationStatus) -> Void) {
+        // Return whichever flow you want to test.
+        completion(.denied)
     }
 }
 
-let myAppPrivacyManager = MyAppPrivacyManager(trackable: MyAppPrivacyManagerMock.self)
-myAppPrivacyManager.requestLocation { status in
-    print(status)
+let privacyManager = AppPrivacyManager(trackable: ATTrackingManagerMock.self)
+privacyManager.requestTrackingAuthorization { result in
+    // result here
 }
+
+PlaygroundPage.current.finishExecution()
 ```
