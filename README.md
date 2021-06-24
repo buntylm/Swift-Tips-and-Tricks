@@ -81,6 +81,7 @@ let binaryRange =    { (0...1).contains($0) }
 print(binaryRange(1))
 print(binaryRange(2))
 ```
+
 #### Difference between Self and self. Self refers to the type of the current "thing" inside of a protocol
 ```swift
 protocol ProtocolName {
@@ -93,6 +94,7 @@ extension ProtocolName where Self : UIView {
     }
 }
 ```
+
 #### Associated type, powerful way of making protocols generic
 ```swift
 protocol DataHolder {
